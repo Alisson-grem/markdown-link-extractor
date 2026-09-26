@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    /* Variáveis de Tema (Modo Claro) */
+    :root {
+      --bg-body: #f9fafb; --text-main: #111827; --bg-panel: white;
+      --border: #e5e7eb; --bg-input: white; --text-muted: #6b7280;
+    }
+
+    /* Variáveis de Tema (Modo Escuro) */
+    body.dark-mode {
+      --bg-body: #111827; --text-main: #f3f4f6; --bg-panel: #1f2937;
+      --border: #374151; --bg-input: #374151; --text-muted: #9ca3af;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body { width: 340px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background-color: var(--bg-body); color: var(--text-main); padding: 16px; transition: background 0.3s, color 0.3s; }
+    
+    /* Cabeçalho */
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+    .header-title { display: flex; align-items: center; }
+    .header h2 { font-size: 16px; font-weight: 600; color: var(--text-main); }
+    .badge-pro { background: #10b981; color: white; font-size: 10px; font-weight: bold; padding: 2px 6px; border-radius: 4px; margin-left: 8px; }
+    
+    #themeToggle { background: transparent; border: 1px solid var(--border); color: var(--text-main); padding: 4px 8px; border-radius: 6px; cursor: pointer; width: auto; font-size: 12px; }
+
+    /* Controles e Filtros */
+    .settings-group { background: var(--bg-panel); padding: 12px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+    .setting-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 13px; }
+    .setting-item:last-child { margin-bottom: 0; }
+    
+    select { padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border); font-size: 12px; outline: none; background: var(--bg-input); color: var(--text-main); }
+    input[type="checkbox"] { accent-color: #2563eb; cursor: pointer; width: 14px; height: 14px; }
+    
+    /* Seletor de Cor */
+    input[type="color"] { border: none; width: 24px; height: 24px; border-radius: 4px; cursor: pointer; background: transparent; padding: 0; }
+    input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+    input[type="color"]::-webkit-color-swatch { border: 1px solid var(--border); border-radius: 4px; }
+
+    /* Área de Preview */
+    .preview-area { margin-bottom: 12px; }
+    .preview-area label { font-size: 12px; font-weight: 500; color: var(--text-muted); display: block; margin-bottom: 4px; }
+    textarea { width: 100%; height: 120px; padding: 8px; border: 1px solid var(--border); border-radius: 6px; font-family: monospace; font-size: 12px; resize: none; background: var(--bg-input); color: var(--text-main); outline: none; }
+    textarea:focus { border-color: #2563eb; }
+
+    /* Botões */
+    .btn-main { background: #2563eb; color: white; border: none; padding: 12px; cursor: pointer; border-radius: 6px; width: 100%; font-weight: 600; font-size: 14px; transition: background 0.2s; display: flex; justify-content: center; align-items: center; gap: 8px; }
+    .btn-main:hover { background: #1d4ed8; }
+    
+    #clearBtn { background: var(--bg-panel); color: var(--text-main); border: 1px solid var(--border); padding: 12px; cursor: pointer; border-radius: 6px; font-weight: 600; font-size: 14px; width: 35%; transition: background 0.2s; }
+    #clearBtn:hover { background: var(--bg-body); }
+
+    /* Mensagem de Status */
+    #status { margin-top: 10px; font-size: 13px; color: #10b981; font-weight: bold; text-align: center; min-height: 18px; transition: color 0.3s; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-title">
+      <h2>Link Extractor</h2>
+      <span class="badge-pro">PRO</span>
+    </div>
+    <button id="themeToggle">🌙 Escuro</button>
+  </div>
+
+  <div class="settings-group">
+    <div class="setting-item">
+      <span>Formato de saída:</span>
+      <select id="formatSelect">
+        <option value="markdown">Markdown</option>
+        <option value="urls">Apenas URLs</option>
+        <option value="text">Texto Simples</option>
+      </select>
+    </div>
+    <div class="setting-item">
+      <span>Destacar na página</span>
+      <input type="checkbox" id="highlightToggle" checked>
+    </div>
+    <div class="setting-item">
+      <span>Cor do destaque:</span>
+      <input type="color" id="highlightColor" value="#ffff00">
+    </div>
+  </div>
+
+  <div class="preview-area">
+    <label>Pré-visualização:</label>
+    <textarea id="preview" placeholder="Clique em extrair para ver os links aqui..."></textarea>
+  </div>
+
+  <div style="display: flex; gap: 8px;">
+    <button id="clearBtn">Limpar</button>
+    <button id="copyBtn" class="btn-main" style="width: 65%;">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+      Extrair e Copiar
+    </button>
+  </div>
+  
+  <div id="status"></div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

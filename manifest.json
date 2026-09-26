@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "Markdown Link Extractor",
+  "version": "1.0",
+  "description": "Copia todos os links da página em formato Markdown.",
+  "permissions": ["activeTab", "scripting"],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
