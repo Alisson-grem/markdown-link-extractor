@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#f8f9fa">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Dashboard de Hábitos</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-color="emerald">
+    <!-- Header exclusivo de PC -->
+    <header class="desktop-header">
+        <div class="logo">✨ Meus Mini-Hábitos</div>
+        <div class="header-icons">
+            <button class="icon-btn" id="stats-btn-pc" title="Estatísticas">📈</button>
+            <button class="icon-btn" id="theme-btn-pc" title="Modo Escuro">🌙</button>
+            <button class="icon-btn" id="settings-btn-pc" title="Configurações">⚙️</button>
+        </div>
+    </header>
+
+    <!-- Header exclusivo de Celular -->
+    <header class="mobile-header">
+        <h2 class="mobile-title">Mini-Hábitos</h2>
+        <button class="icon-btn settings-mobile" id="settings-btn-mobile">⚙️</button>
+    </header>
+
+    <div class="app-container">
+        <header class="app-header">
+            <h1>Seu Progresso</h1>
+            <p class="subtitle">Complete suas metas diárias</p>
+        </header>
+        
+        <!-- Barra de progresso -->
+        <div class="progress-wrapper">
+            <div class="progress-track">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+        </div>
+
+        <!-- Grade de hábitos (Agora é o JS que preenche isso aqui!) -->
+        <div class="habits-list" id="habits-list">
+            <!-- Os botões entram aqui via JavaScript -->
+        </div>
+
+        <div class="actions-container">
+            <button id="add-btn-pc" class="btn-primary desktop-only">➕ Adicionar Hábito</button>
+            <button id="notify-btn" class="btn-outline">🔔 Ativar Notificações</button>
+            <button id="reset-btn" class="btn-secondary">🔄 Zerar o Dia</button>
+        </div>
+    </div>
+
+    <!-- Footer exclusivo de celular -->
+    <footer class="mobile-footer" id="mobile-footer">
+        <button class="nav-btn active" id="home-btn-mobile">
+            <span class="icon">🏠</span>
+        </button>
+        <button class="nav-btn" id="stats-btn-mobile">
+            <span class="icon">📈</span>
+        </button>
+        
+        <!-- BOTÃO GORDINHO DO MEIO -->
+        <div class="fab-wrapper">
+            <button class="big-add-btn" id="add-btn-mobile">➕</button>
+        </div>
+
+        <button class="nav-btn" id="theme-btn-mobile">
+            <span class="icon">🌙</span>
+        </button>
+        
+        <!-- Ícone de instalar só aparece quando está no navegador -->
+        <button class="nav-btn install-anim" id="install-icon-btn" style="display: none;">
+            <span class="icon">📥</span>
+        </button>
+    </footer>
+
+    <!-- MODAL: Configurações & Temas & Lixeira -->
+    <div class="modal-overlay" id="settings-modal">
+        <div class="modal-content">
+            <h3>🎨 Personalizar Tema</h3>
+            <p>Escolha a cor da sua magia:</p>
+            <div class="theme-selector">
+                <button class="theme-color-btn" data-setcolor="emerald" style="background: #10b981;"></button>
+                <button class="theme-color-btn" data-setcolor="blue" style="background: #3b82f6;"></button>
+                <button class="theme-color-btn" data-setcolor="purple" style="background: #8b5cf6;"></button>
+                <button class="theme-color-btn" data-setcolor="pink" style="background: #ec4899;"></button>
+            </div>
+            
+            <h3 style="margin-top: 30px; font-size: 18px;">Gerenciar Hábitos</h3>
+            <div id="settings-habits-list" class="settings-habits-list">
+                <!-- A lista de hábitos para apagar entra aqui -->
+            </div>
+            
+            <button class="btn-primary" id="close-settings-btn" style="margin-top: 20px;">Fechar</button>
+        </div>
+    </div>
+
+    <!-- MODAL: Adicionar Novo Hábito -->
+    <div class="modal-overlay" id="add-habit-modal">
+        <div class="modal-content">
+            <h3>✨ Novo Hábito</h3>
+            <div class="input-group">
+                <label>Emoji (Ícone)</label>
+                <input type="text" id="habit-emoji-input" placeholder="Ex: 🏃‍♂️" maxlength="2" value="⭐">
+            </div>
+            <div class="input-group">
+                <label>Nome do Hábito</label>
+                <input type="text" id="habit-name-input" placeholder="Ex: Correr 5km">
+            </div>
+            <div class="modal-buttons">
+                <button class="btn-secondary" id="cancel-habit-btn">Cancelar</button>
+                <button class="btn-primary" id="save-habit-btn">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

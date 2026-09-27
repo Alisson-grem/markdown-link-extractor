@@ -1,0 +1,40 @@
+const CACHE_NAME = 'habitos-v8';
+const arquivosParaSalvar = [
+    './',
+    './index.html',
+    './style.css',
+    './script.js',
+    './manifest.json'
+];
+
+self.addEventListener('install', evento => {
+    evento.waitUntil(
+        caches.open(CACHE_NAME).then(cache => {
+            return cache.addAll(arquivosParaSalvar);
+        })
+    );
+    self.skipWaiting();
+});
+
+self.addEventListener('activate', evento => {
+    evento.waitUntil(
+        caches.keys().then(chaves => {
+            return Promise.all(
+                chaves.map(chave => {
+                    if (chave !== CACHE_NAME) {
+                        return caches.delete(chave);
+                    }
+                })
+            );
+        })
+    );
+    self.clients.claim();
+});
+
+self.addEventListener('fetch', evento => {
+    evento.respondWith(
+        caches.match(evento.request).then(resposta => {
+            return resposta || fetch(evento.request);
+        })
+    );
+});
